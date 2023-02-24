@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Competition index{% endblock %}
+
+{% block code %}
+<br>
+<br>
+<br>
+<br>
+<br>
+    <h1>Competition index</h1>
+<br>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NameAthlete</th>
+                <th>NbrTrophet</th>
+                <th>NbrParticipationInternational</th>
+                <th> ClassementMondial</th>
+                <th>Niveau</th>
+                <th>actions</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for competition in competitions %}
+            <tr>
+                <td>{{ competition.id }}</td>
+                <td>{{ competition.athlete.name}}</td>
+                <td>{{ competition.nbrTrophet }}</td>
+                <td>{{ competition.nbrParticipationInternational }}</td>
+                <td>{{ competition.ClassementMondial }}</td>
+                <td>{{ competition.Niveau }}</td>
+                 
+                <td>
+                    <a href="{{ path('app_competition_show', {'id': competition.id}) }}">show</a>
+                    <a href="{{ path('app_competition_edit', {'id': competition.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_competition_new') }}">Create new</a>
+{% endblock %}
