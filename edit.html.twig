@@ -1,0 +1,13 @@
+
+
+{% block title %}Edit Participant{% endblock %}
+
+{% block header %}
+    <h1>Edit Participant</h1>
+
+    {{ include('participant/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_participant_index') }}">back to list</a>
+
+    {{ include('participant/_delete_form.html.twig') }}
+{% endblock %}
