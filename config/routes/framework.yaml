@@ -1,4 +1,7 @@
-when@dev:
-    _errors:
-        resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
-        prefix: /_error
+framework:
+    resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
+    prefix: /_error
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        path: /index.php/%kernel.project_dir%/public/index.php/
+        permanent: true

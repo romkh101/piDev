@@ -1,0 +1,26 @@
+<div class="container">
+{{form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+<div class="form-group">
+    {{ form_label(form.Nom,"Numéro d'iNomription") }}
+    {{ form_widget(form.Nom,{ 'attr': {'class': 'form-control'} }) }} 
+    {% if form_errors(form.Nom) is not empty %}
+    <div class="alert alert-danger" >
+    {{ form_errors(form.Nom) }}
+</div>
+{% endif %}
+</div>
+
+
+    <div class="form-group">
+    {{ form_label(form.Nbj,"Votre Nbj") }}
+    {{ form_widget(form.Nbj,{ 'attr': {'class': 'form-control'} }) }}
+    {% if form_errors(form.Nbj) is not empty %}
+    <div class="alert alert-danger">
+    {{ form_errors(form.Nbj) }}
+</div>
+{% endif %}
+</div>
+<br>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+</div>

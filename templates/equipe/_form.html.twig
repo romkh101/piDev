@@ -1,0 +1,37 @@
+<div class="container">
+{{form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+<div class="form-group">
+    {{ form_label(form.Nom,"Nom") }}
+    {{ form_widget(form.Nom,{ 'attr': {'class': 'form-control'} }) }} 
+    {% if form_errors(form.Nom) is not empty %}
+    <div class="alert alert-danger" >
+    {{ form_errors(form.Nom) }}
+</div>
+{% endif %}
+
+
+
+<div class="form-group">
+    {{ form_label(form.Pays,"Votre Pays") }}
+    {{ form_widget(form.Pays,{ 'attr': {'class': 'form-control'} }) }}
+    {% if form_errors(form.Pays) is not empty %}
+    <div class="alert alert-danger">
+    {{ form_errors(form.Pays) }}
+</div>
+{% endif %}
+
+
+<div class="form-group">
+    {{ form_label(form.Ligue,"Votre pays") }}
+    {{ form_widget(form.Ligue,{ 'attr': {'class': 'form-control'} }) }}
+    {% if form_errors(form.Ligue) is not empty %}
+    <div class="alert alert-danger">
+    {{ form_errors(form.Ligue) }}
+</div>
+
+{% endif %}
+</div>
+<br>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+</div>
