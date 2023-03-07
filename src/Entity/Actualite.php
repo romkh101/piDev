@@ -27,7 +27,7 @@ class Actualite
     #[ORM\Column(length: 255)]
     private ?string $Image = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 2000)]
     #[Assert\Length(min:50)]
     #[Assert\NotBlank(message:"Contenu requis")]
     private ?string $Contenu = null;
