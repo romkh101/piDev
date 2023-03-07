@@ -10,7 +10,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActualiteRepository::class)]
-class Actualite
+#[ORM\Table(name: "actualite")]
+#[ORM\Index(columns: ["Titre", "Contenu"], flags: ["fulltext"])]
+class Actualite 
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -120,4 +122,6 @@ class Actualite
 
         return $this;
     }
+    
+   
 }

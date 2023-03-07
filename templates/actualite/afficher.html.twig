@@ -184,6 +184,7 @@
 			<!-- dashboard inner -->
 			<div class="midde_cont">
 				<div class="container-fluid">
+				
 					<div class="row column_title">
 						<div class="col-md-12">
 							<div class="page_title">
@@ -197,10 +198,12 @@
 					<div class="row"></div>
 					<!-- table section -->
 					<div class="col-md-12">
+					{{ form(form) }}
 						<div class="white_shd full margin_bottom_30">
 							<div class="full graph_head">
 								<div class="heading1 margin_0"></div>
 							</div>
+							
 							<div class="table_section padding_infor_info">
 								<div class="table-responsive-sm">
 									<table class="table">
@@ -227,6 +230,7 @@
 													<div style="text-align: center;">
 														<a href="{{ path('ModifierA', {'id': a.id}) }}"  class="btn btn-warning mx-2">Modifier</a>
 														<a href="{{ path('SupprimerA', {'id': a.id}) }}" class="btn btn-danger mx-2" >Supprimer</a>
+														<a href="{{ path('export_actualite', {'id': a.id}) }}" class="btn btn-primary">Exporter en PDF</a>
 													</div>
 												</td>
 											</tr>

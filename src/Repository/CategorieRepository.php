@@ -38,6 +38,7 @@ class CategorieRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
 
 //    /**
 //     * @return Categorie[] Returns an array of Categorie objects

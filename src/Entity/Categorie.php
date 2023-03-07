@@ -73,5 +73,9 @@ class Categorie
 
         return $this;
     }
+    public function getActualitesCount()
+    {
+        return count($this->actualites);
+    }
 
 }

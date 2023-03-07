@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+
 use App\Entity\Actualite;
+use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @extends ServiceEntityRepository<Actualite>
@@ -59,6 +62,48 @@ class ActualiteRepository extends ServiceEntityRepository
         }
     
         return $query->getQuery()->getResult();
+    }
+     /**
+     * Recherche les actualites en fonction du formulaire
+     * @return void 
+     */
+    public function search($mots = null,$categorie=null){
+        $query = $this->createQueryBuilder('a');
+        
+        if($mots != null){
+            $query->andWhere('MATCH_AGAINST(a.Titre, a.Contenu) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots);
+        }
+        if($categorie != null){
+            $query->leftJoin('a.categorie', 'c');
+            $query->andWhere('c.id = :id')
+                ->setParameter('id', $categorie);
+        }
+        
+        return $query->getQuery()->getResult();
+    }
+
+      /**
+     * Returns tout les actualites par page
+     * @return void 
+     */
+    public function getPaginatedActualites($page, $limit){
+        $query = $this->createQueryBuilder('a');
+        $query->orderBy('a.Date', 'DESC')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
+        /**
+     * Returns nombres d'actualites
+     * @return void 
+     */
+    public function getTotalActualites(){
+        $query = $this->createQueryBuilder('a')
+            ->select('COUNT(a)');
+    
+        return $query->getQuery()->getSingleScalarResult();
     }
 
 //    /**
