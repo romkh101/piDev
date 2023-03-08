@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActualiteRepository::class)]
 #[ORM\Table(name: "actualite")]
-#[ORM\Index(columns: ["Titre", "Contenu"], flags: ["fulltext"])]
+#[ORM\Index(columns: ["Titre", "Contenu","Auteur"], flags: ["fulltext"])]
 class Actualite 
 {
     #[ORM\Id]

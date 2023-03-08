@@ -28,95 +28,80 @@
 
 	<body>
 
-		<!-- ***** Preloader Start ***** -->
-		<div id="js-preloader" class="js-preloader">
-			<div class="preloader-inner">
-				<span class="dot"></span>
-				<div class="dots">
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-			</div>
-		</div>
-		<!-- ***** Preloader End ***** -->
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
 
-
-		<!-- ***** Header Area Start ***** -->
-		<header class="header-area header-sticky">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<nav
-							class="main-nav">
-							<!-- ***** Logo Start ***** -->
-							<a href="{{ path('actualite') }}"><img src="assets/images/logo.png" style="max-height: 200px; max-width: 200px;margin-top: -60px;"></a>
-
-							<!-- ***** Logo End ***** -->
-							<!-- ***** Menu Start ***** -->
-
-							<ul class="nav">
-								<li class="scroll-to-section">
-									<a href="#top" class="active">Acceuil</a>
-								</li>
-								<li class="scroll-to-section">
-									<a href="{{ path('Afficherfront') }}">Actualités</a>
-								</li>
-								<li class="scroll-to-section">
-									<a href="#trainers">Equipes
-									</a>
-								</li>
-								<li class="scroll-to-section">
-									<a href="#our-classes">Athlétes</a>
-								</li>
-								<li class="scroll-to-section">
-									<a href="#schedule">Evenements</a>
-								</li>
-								<li class="scroll-to-section">
-									<a href="#contact-us">Forum</a>
-								</li>
-								<li class="main-button">
-									<a href="#">Inscrivez-vous</a>
-								</li>
-
-							</ul>
-
-
-							<a class='menu-trigger'>
-								<span>Menu</span>
-							</a>
-							<!-- ***** Menu End ***** -->
-						</nav>
-					</div>
-				</div>
-			</div>
-		</header>
-		<!-- ***** Header Area End ***** -->
-
-		<!-- ***** Main Banner Area Start ***** -->
-		<div
-			class="main-banner" id="top"><!----   <video autoplay muted loop id="bg-video">
-												            <source src="assets/images/gym-video.mp4" type="video/mp4" />
-												        </video> -->
-
-
-		</div>
-		<!-- ***** Main Banner Area End ***** -->
-
-		<!-- ***** Features Item Start ***** -->
-	<section class="section" id="features" style="margin-top: 100px;">
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-                {% set now = "now"|date("Y-m-d H:i:s") %} 
-                <img src="{{ asset('uploads/images/actualites/' ~ actualite.Image) }}" alt="{{ actualite.Image }}" style="width: 700px; height: 400px; margin-bottom: 20px;">
-				
-                 <h2 style="font-weight: bold;">{{ actualite.Titre }}</h2>
-				 <td><strong>Categorie:</strong> {% if actualite.Categorie is not null %}{{actualite.Categorie.nom}}{% endif %} <button onclick="showTranslate()">Traduire</button></td>
-                <p>{{ actualite.Contenu }}</p>
-                <p><strong>Auteur:</strong> {{ actualite.Auteur }}</p>
-                <span class="date">{{ actualite.Date|time_diff(now) }}</span>
-				 <div class="share-buttons">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="{{ path('actualite') }}"><img src="assets/images/logo.png" style="max-height: 200px; max-width: 200px;margin-top: -60px;"></a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section">
+                <a href="#top" class="active">Acceuil</a>
+              </li>
+              <li class="scroll-to-section">
+                <a href="{{ path('Afficherfront') }}">Actualités</a>
+              </li>
+              <li class="scroll-to-section">
+                <a href="#trainers">Equipes</a>
+              </li>
+              <li class="scroll-to-section">
+                <a href="#our-classes">Athlétes</a>
+              </li>
+              <li class="scroll-to-section">
+                <a href="#schedule">Evenements</a>
+              </li>
+              <li class="scroll-to-section">
+                <a href="#contact-us">Forum</a>
+              </li>
+              <li class="main-button">
+                <a href="#">Inscrivez-vous</a>
+              </li>
+            </ul>
+            <a class='menu-trigger'>
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <!-- ***** Main Banner Area Start ***** -->
+  <div class="main-banner" id="top"></div>
+  <!-- ***** Main Banner Area End ***** -->
+
+  <!-- ***** Features Item Start ***** -->
+  <section class="section" id="features" style="margin-top: 100px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          {% set now = "now"|date("Y-m-d H:i:s") %}
+          <img src="{{ asset('uploads/images/actualites/' ~ actualite.Image) }}" alt="{{ actualite.Image }}" style="width: 700px; height: 400px; margin-bottom: 20px;">
+          <h2 style="font-weight: bold;">{{ actualite.Titre }}</h2>
+          <td><strong>Categorie:</strong> {% if actualite.Categorie is not null %}{{actualite.Categorie.nom}}{% endif %} <button id="translate-btn" onclick="showTranslate()">Traduire</button></td>
+          <p>{{ actualite.Contenu }}</p>
+          <p><strong>Auteur:</strong> {{ actualite.Auteur }}</p>
+          <span class="date" >{{ actualite.Date|time_diff(now) }}</span>
+          <div id ="share-buttons" class="share-buttons">
                     <a href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1/" target="_blank"><i class="fa fa-facebook"></i></a>
                     <a href="https://twitter.com/intent/tweet?url=http://127.0.0.1/" target="_blank"><i class="fa fa-twitter"></i></a>
                     <a href="https://www.linkedin.com/shareArticle?url=http://127.0.0.1/" target="_blank"><i class="fa fa-linkedin"></i></a>
@@ -130,6 +115,12 @@
     @media print {
   button.print-button {
     visibility: hidden;
+  }
+   #translate-btn {
+    display: none;
+  }
+  #share-buttons{
+    display: none;
   }
     }
   </style>
@@ -163,8 +154,7 @@
 	
 </div></div></div></section><!-- ***** Call to Action End ***** --><!-- ***** Our Classes Start ***** --><!-- ***** Our Classes End ***** --><!-- ***** Testimonials Starts ***** --><!-- ***** Testimonials Ends ***** --><!-- ***** Contact Us Area Starts ***** --><!-- ***** Contact Us Area Ends ***** --><!-- ***** Footer Start ***** --><footer><div class="container"> <div class="row">
 <div class="col-lg-12">
-	<p>Copyright &copy; 2023 ABC-Sports. All rights reserved.
-	</p>
+	<p>Copyright &copy; 2023 ABC-Sports. All rights reserved.</p>
 
 	<!-- You shall support us a little via PayPal to info@templatemo.com -->
 

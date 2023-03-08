@@ -195,43 +195,126 @@ public function afficherActualite(ActualiteRepository $repository, Request $requ
      * @Route("/AfficherA/{id}/export-pdf", name="export_actualite")
      */
     public function exportAction($id)
-    {
+{
+    // Récupérez l'actualité à exporter en utilisant l'ID
+    $actualite = $this->getDoctrine()->getRepository(Actualite::class)->find($id);
+
+    // Générez le contenu HTML de l'actualité avec un style personnalisé
+    $html = '<html><head><style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
         
-        // Récupérez l'actualité à exporter en utilisant l'ID
-        $actualite = $this->getDoctrine()->getRepository(Actualite::class)->find($id);
-        
-        // Générez le contenu HTML de l'actualité
-        $html = '<html><body>';
-        $imagePath = $this->getParameter('kernel.project_dir') . '/public/assets/images/logo.png';
-        $html .= '<div style="text-align:center;"><img src="' . $imagePath . '" /></div>';
-        if ($actualite->getImage()) {
-            $path = $this->getParameter('kernel.project_dir') . '/public/uploads/images/actualites/' . $actualite->getImage();
-            $data = base64_encode(file_get_contents($path));
-            $html .= '<img src="data:image/png;base64,' . $data . '" />';
-        }
-        $html .= '<h1>' . $actualite->getTitre() . '</h1>';
-        
-        $html .= '<p>' . $actualite->getContenu() . '</p>';
-        $html .= '<p>' . $actualite->getAuteur() . '</p>';
-        
-        $html .= '</body></html>';
-        
-        // Générez le fichier PDF en utilisant Dompdf
-        
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-        $pdf = $dompdf->output();
-        
-        // Retournez le fichier PDF en tant que réponse HTTP
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/pdf');
-        $response->setContent($pdf);
-        $response->headers->set('Content-Disposition', 'attachment;filename="actualite.pdf"');
-        
-        return $response;
     }
+    .logo-container {
+        width: 200px;
+        height: 200px;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+    }
+    .logo {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .date-container {
+        width: 200px;
+        height: 50px;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+    }
+    .date {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .title {
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .date-container {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .center-image img {
+        width: 100%;
+        height: auto;
+      }
+    
+    .content {
+        margin-top: 50px;
+        text-align: justify;
+        line-height: 1.5;
+    }
+    .content-container {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+     }
+    
+    .author {
+        margin-top: 30px;
+        font-style: italic;
+        text-align: right;
+    }
+    
+    .footer {
+        margin-top: 50px;
+        font-size: 14px;
+        font-style: italic;
+        text-align: center;
+    }
+    
+    </style></head><body>';
+
+    $pathlogo = $this->getParameter('kernel.project_dir') . '/public/assets/images/logo.png';
+    $imageData = base64_encode(file_get_contents($pathlogo));
+    $html .= '<div class="container"><div class="logo-container"><img class="logo" src="data:image/png;base64,' . $imageData . '"/></div>';
+
+    $date = new \DateTime();
+    $dateStr = $date->format('d/m/Y');
+    $html .= '<div class="date-container"><div class="date">Date: ' . $dateStr . '</div></div>';
+
+    if ($actualite->getImage()) {
+    $path = $this->getParameter('kernel.project_dir') . '/public/uploads/images/actualites/' . $actualite->getImage();
+    $data = base64_encode(file_get_contents($path));
+    $html .= '<div class="center-image"><img src="data:image/png;base64,' . $data . '" /></div>';
+    }
+    $html .= '<div class="title">' . $actualite->getTitre() . '</div></div>';
+    $html .= '<div  class="content-container"><p>' . $actualite->getContenu() . '</p></div>';
+    $html .= '<div style="text-align: center;"><p> Auteur: ' . $actualite->getAuteur() . '</p> </div>';
+    $html .= '<div style="text-align: center; margin-top: 50px; font-size: 14px; " class="footer">Copyright © 2023 ABC-Sports. All rights reserved.</div>';
+    $html .= '</body></html>';
+
+
+    // Générez le fichier PDF en utilisant Dompdf
+    $dompdf = new Dompdf();
+    $dompdf->set_option('isRemoteEnable', TRUE);
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    $pdf = $dompdf->output();
+
+    // Retournez le fichier PDF en tant que réponse HTTP
+    $response = new Response();
+    $response->headers->set('Content-Type', 'application/pdf');
+    $response->setContent($pdf);
+    $response->headers->set('Content-Disposition', 'attachment;filename="actualite.pdf"');
+
+    return $response;
+}
 
 }
 

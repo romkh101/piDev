@@ -71,7 +71,7 @@ class ActualiteRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('a');
         
         if($mots != null){
-            $query->andWhere('MATCH_AGAINST(a.Titre, a.Contenu) AGAINST (:mots boolean)>0')
+            $query->andWhere('MATCH_AGAINST(a.Titre, a.Contenu,a.Auteur) AGAINST (:mots boolean)>0')
                 ->setParameter('mots', $mots);
         }
         if($categorie != null){
