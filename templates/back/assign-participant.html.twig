@@ -1,0 +1,26 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Assign Athlete{% endblock %}
+
+{% block body %}
+<br>
+<br>
+
+
+<br>
+
+  <h1>Assign Participant to {{ back.name }}</h1>
+<br>
+<br>
+<br>
+
+
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <button type="submit" class="btn btn-primary">Assign</button>
+  {{ form_end(form) }}
+
+  <hr>  
+
+  <a href="{{ path('app_back_show', { 'id': back.id }) }}">Back to evennement</a>
+{% endblock %}

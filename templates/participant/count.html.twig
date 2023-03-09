@@ -1,0 +1,15 @@
+
+
+{% block title %}Count Participants{% endblock %}
+
+{% block body %}
+    <h1>Count Participants</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.search) }}
+    {{ form_end(form) }}
+
+    {% if count is not null %}
+        <p>Number of Participants for Event "{{ form.name.vars.value }}": {{ count }}</p>
+    {% endif %}
+{% endblock %}

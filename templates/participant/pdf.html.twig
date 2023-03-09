@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ participant.nom }}</title>
+</head>
+<body>
+    <h1 class=titre><center>Passe de participation</h1>
+    <br>
+    <br>
+    <br>
+     <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ participant.id }}</td>
+            </tr>
+            <tr>
+                <th>CIN</th>
+                <td>{{ participant.idPart }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ participant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Name_event</th>
+                <td>{{ participant.nameEvent }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ participant.prenom }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Ce certificat atteste que a participé au participant {{ participant.prenom }} organisé par notre association.</p>
+     <br>
+    <div class="sidebar_user_info">
+                     <div class="icon_setting"></div>
+                     <div class="user_profle_side">
+                        <div><img src="{{asset('assets/images/art1.jpg')}}" alt="#" /></div>
+                    
+                     </div>
+                  </div>
+       <br>
+    <br>
+    <br>
+  <img src="{{ qrCodeDataUri }}" alt="QR code">
+
+     <br>
+    <br>
+    <br>
+     <br>
+    <br>
+    <br>
+
+
+
+</body>
+</html>

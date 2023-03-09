@@ -1,0 +1,106 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Evennement index{% endblock %}
+
+{% block body %}
+    <h1>Evennement index</h1>
+
+    <table  class="table" id="calendar">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Nb_max_part</th>             
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for back in backs %}
+            <tr>
+                <td>{{ back.id }}</td>
+                <td>{{ back.name }}</td>
+                <td>{{ back.date ? back.date|date('Y-m-d') : '' }}</td>
+                <td>{{ back.time ? back.time|date('H:i:s') : '' }}</td>
+                <td>{{ back.nbMaxPart }}</td>
+                <td>{{ back.description }}</td>
+                <td>
+                    <a href="{{ path('app_back_show', {'id': back.id}) }}">show</a>
+                    <a href="{{ path('app_back_edit', {'id': back.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_back_new') }}">Create new</a>
+
+   <script>
+  // Get the table rows from the HTML table
+  const tableRows = document.querySelectorAll('#calendar tbody tr');
+
+  // Loop through the table rows
+  tableRows.forEach((row) => {
+    // Extract the date and name data from the table row
+    const dateStr = row.querySelector('td:nth-child(3)').textContent;
+    const name = row.querySelector('td:nth-child(2)').textContent;
+
+    // Create a Date object from the date string
+    const date = new Date(dateStr);
+
+    // Create a new Date object for the first day of the month
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+
+    // Create a new row for the calendar
+    const newRow = document.createElement('tr');
+
+    // Loop through the days of the month
+    for (let i = 0; i < 31; i++) {
+      const cell = document.createElement('td');
+
+      // Calculate the date of the current cell
+      const cellDate = new Date(firstDayOfMonth.getFullYear(), firstDayOfMonth.getMonth(), i + 1);
+
+      // If the cell date matches the row date, add the name to the cell
+      if (cellDate.toDateString() === date.toDateString()) {
+        cell.textContent = name;
+      }
+
+      newRow.appendChild(cell);
+    }
+
+    // Add the new row to the calendar table
+    document.querySelector('#calendar').appendChild(newRow);
+  });
+</script>
+<!-- HTML calendar structure -->
+<div class="calendar">
+  <div class="calendar-header">
+    <button class="prev-button">&lt;</button>
+    <h2 class="month-year"></h2>
+    <button class="next-button">&gt;</button>
+  </div>
+  <table class="calendar-body">
+    <thead>
+      <tr>
+        <th>Sun</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

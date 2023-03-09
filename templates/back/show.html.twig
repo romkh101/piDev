@@ -1,0 +1,51 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Evennement{% endblock %}
+
+{% block body %}
+    <h1>Evennement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ back.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ back.name }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ back.date ? back.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Time</th>
+                <td>{{ back.time ? back.time|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nb_max_part</th>
+                <td>{{ back.nbMaxPart }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ back.description }}</td>
+            </tr>
+
+             <tr> <th> <h1>Participants </h1> </th> </tr>
+ 
+            {% for participant in back.participants %}
+            <tr>
+                <th class="table-header">name</th>
+                <td>{{ participant.nom }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('app_back_index') }}">back to list</a>
+
+    <a href="{{ path('app_back_edit', {'id': back.id}) }}">edit</a>
+    <a class="btn btn-primary" href="{{ path('back_assign_participant', {'id': back.id}) }}">Confirmer</a>
+
+    {{ include('back/_delete_form.html.twig') }}
+{% endblock %}

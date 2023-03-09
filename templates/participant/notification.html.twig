@@ -1,0 +1,23 @@
+{# templates/notification/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block body %}
+    <h1>Notifications</h1>
+
+    {% if notifications is empty %}
+        <p>You have no notifications.</p>
+    {% else %}
+        <ul>
+            {% for notification in notifications %}
+                <li>
+                    <strong>{{ notification.getTitle() }}</strong><br>
+                    <span>{{ notification.getMessage() }}</span><br>
+                    <small>{{ notification.getCreatedAt()|date('Y-m-d H:i:s') }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

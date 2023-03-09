@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Participant{% endblock %}
+
+{% block header %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <h1>Create new Participant</h1>
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+    {{ include('participant/_form.html.twig') }}
+
+    <a href="{{ path('app_participant_index') }}">back to list</a>
+      {% for type, messages in app.flashes() %}
+    {% for message in messages %}
+        <div class="alert {% if type == 'danger' %}alert-danger{% endif %}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+{% endblock %}

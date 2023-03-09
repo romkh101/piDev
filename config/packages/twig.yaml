@@ -1,0 +1,8 @@
+twig:
+    
+    globals:
+        dompdf:
+            enabled: true
+            binary: /usr/local/bin/dompdf # chemin de l'exécutable Dompdf
+            options:
+                isRemoteEnabled: true # permet de charger des fichiers distants
