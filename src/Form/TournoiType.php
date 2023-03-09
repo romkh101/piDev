@@ -2,31 +2,30 @@
 
 namespace App\Form;
 
-use App\Entity\Competition;
+use App\Entity\Tournoi;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CompetitionType extends AbstractType
+class TournoiType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nbrTrophet')
-            ->add('nbrParticipationInternational')
-<<<<<<< Updated upstream
-            ->add('ClassementMondial')
-            ->add('Niveau')
-=======
-            
->>>>>>> Stashed changes
+            ->add('titre')
+            ->add('date')
+            ->add('athletes')
+    
         ;
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Competition::class,
+            'data_class' => Tournoi::class,
+            
         ]);
     }
+    
 }

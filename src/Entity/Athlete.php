@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Entity;
+<<<<<<< Updated upstream
+=======
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+>>>>>>> Stashed changes
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\AthleteRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,6 +44,18 @@ class Athlete
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Competition $Competition = null;
 
+<<<<<<< Updated upstream
+=======
+    #[ORM\ManyToMany(targetEntity: Tournoi::class, inversedBy: 'athletes')]
+    
+    private Collection $tournoi;
+
+    public function __construct()
+    {
+        $this->tournoi = new ArrayCollection();
+    }
+
+>>>>>>> Stashed changes
    
 
     public function getId(): ?int
@@ -110,7 +127,13 @@ class Athlete
     {
         return $this->competition;
     }
+<<<<<<< Updated upstream
     
+=======
+    public function __toString() {
+        return $this->name;
+    }
+>>>>>>> Stashed changes
     public function setCompetition(?Competition $competition): self
     {
         // unset the owning side of the relation if necessary
@@ -127,6 +150,35 @@ class Athlete
 
         return $this;
     }
+<<<<<<< Updated upstream
+=======
+
+    /**
+     * @return Collection<int, Tournoi>
+     */
+    public function getTournoi(): Collection
+    {
+        return $this->tournoi;
+    }
+
+    public function addTournoi(Tournoi $tournoi): self
+    {
+        if (!$this->tournoi->contains($tournoi)) {
+            $this->tournoi[]=$tournoi;
+            $tournoi->addAthlete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournoi(Tournoi $tournoi): self
+    {
+        if (!$this->tournoi->contains($tournoi)){
+        $this->tournoi->removeElement($tournoi);
+        }
+        return $this;
+    }
+>>>>>>> Stashed changes
     
 }
    

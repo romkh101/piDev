@@ -1,4 +1,8 @@
 {% extends 'base.html.twig' %}
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 {% block title %}New Athlete{% endblock %}
 
 {% block code %}
@@ -7,9 +11,31 @@
 <br>
 <br>
 <br>
+<<<<<<< Updated upstream
     <h1>Create new Athlete</h1>
+=======
+<h1>Create new Athlete</h1>
+
+
+
+
+
+
+>>>>>>> Stashed changes
 {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
     {{ include('athlete/_form.html.twig') }}
 
     <a href="{{ path('app_athlete_index') }}">back to list</a>
+<<<<<<< Updated upstream
+=======
+  {% for type, messages in app.flashes() %}
+    {% for message in messages %}
+        <div class="alert {% if type == 'danger' %}alert-danger{% endif %}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+
+>>>>>>> Stashed changes
 {% endblock %}

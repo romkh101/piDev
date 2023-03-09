@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournoi index{% endblock %}
+
+{% block code %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>Tournoi index</h1>
+    <br>
+    <br>
+
+    <form class="form-inline my-2 my-lg-0" action="{{ path('app_tournoi_index') }}">
+        <input class="form-control mr-sm-2" type="search" placeholder="Recherche" aria-label="Recherche" name="q" value="{{ q }}">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+    </form>
+
+    <br>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="font-weight-bold">Id</th>
+                <th class="font-weight-bold">Titre</th>
+                <th class="font-weight-bold">Date</th>
+                <th class="font-weight-bold">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tournoi in tournoi %}
+                <tr>
+                    <td>{{ tournoi.id }}</td>
+                    <td>{{ tournoi.titre }}</td>
+                    <td>{{ tournoi.date ? tournoi.date|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_tournoi_show', {'id': tournoi.id}) }}">show</a>
+                        <a href="{{ path('app_tournoi_edit', {'id': tournoi.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if tournoi|length > 0 %}
+        <ul class="pagination justify-content-center">
+            {% for page in tournoi.page %}
+                <li {% if page.isCurrentPage %}class="active"{% endif %}>
+                    <a href="{{ path('app_tournoi_index', {'page': page.number, 'q': q}) }}">{{ page.number }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+   
+        {{ knp_pagination_render(tournoi) }}
+    {% endif %}
+
+    <a class="btn btn-primary" href="{{ path('app_tournoi_new') }}">Create new</a>
+{% endblock %}

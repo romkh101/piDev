@@ -30,6 +30,10 @@ class CompetitionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+<<<<<<< Updated upstream
+=======
+            
+>>>>>>> Stashed changes
             $competitionRepository->save($competition, true);
 
             return $this->redirectToRoute('app_competition_index', [], Response::HTTP_SEE_OTHER);
@@ -83,7 +87,11 @@ class CompetitionController extends AbstractController
     {
         $competition = new Competition();
         $form = $this->createForm(CompetitionType::class, $competition);
+<<<<<<< Updated upstream
 
+=======
+       
+>>>>>>> Stashed changes
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $competition = $form->getData();

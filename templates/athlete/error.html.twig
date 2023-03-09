@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block code %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <div class="alert alert-danger" role="alert">
+        L'athlète ne peut pas être ajouté car il ne répond pas aux critères d'âge et de poids requis.
+    </div>
+    <p><a href="{{ path('app_athlete_index') }}">Retour à la liste des athlètes</a></p>
+{% endblock %}

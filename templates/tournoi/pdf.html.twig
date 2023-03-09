@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ tournoi.titre }}</title>
+</head>
+<body>
+    <h1>Certificat de participation</h1>
+    <p>Ce certificat atteste que {% for athlete in tournoi.athletes %}
+            
+                {{ athlete.name }}
+            
+            {% endfor %} a participé au tournoi {{ tournoi.titre }} organisé par notre association.</p>
+    <p>Date : {{ tournoi.date | date("d/m/Y") }}</p>
+    <p>Signature : ____________________________</p>
+</body>
+</html>

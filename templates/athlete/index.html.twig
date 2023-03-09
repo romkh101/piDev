@@ -20,10 +20,19 @@
                 <th>Poids</th>
                 <th>Taille</th>
                 <th>actions</th>
+<<<<<<< Updated upstream
+=======
+             
+               
+>>>>>>> Stashed changes
             </tr>
         </thead>
         <tbody>
         {% for athlete in athletes %}
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
             <tr>
                 <td>{{ athlete.id }}</td>
                 <td>{{ athlete.name }}</td>
@@ -31,6 +40,12 @@
                 <td>{{ athlete.Age }}</td>
                 <td>{{ athlete.poids }}</td>
                 <td>{{ athlete.taille }}</td>
+<<<<<<< Updated upstream
+=======
+                 
+           
+        
+>>>>>>> Stashed changes
                 <td>
                     <a href="{{ path('app_athlete_show', {'id': athlete.id}) }}">show</a>
                     <a href="{{ path('app_athlete_edit', {'id': athlete.id}) }}">edit</a>
@@ -38,6 +53,10 @@
                     <a href="{{ path('app_com', {'id': athlete.id}) }}">NewCompetition</a>
                     
                     
+<<<<<<< Updated upstream
+=======
+                    
+>>>>>>> Stashed changes
                 </td>
             </tr>
         {% else %}
@@ -45,6 +64,10 @@
                 <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
         </tbody>
     </table>
 
