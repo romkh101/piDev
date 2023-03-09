@@ -116,10 +116,10 @@
                         <div class="col-md-6">
                             <div class="feature-item">
                                 <div class="feature-image">
-                                    <img src="{{ asset('uploads/images/actualites/' ~ a.Image) }}" alt="{{ a.Image }}" style="width: 100%; max-height: 450px;">
+                                    <a href="{{ path('Afficheractualite', {'id': a.id}) }}"><img src="{{ asset('uploads/images/actualites/' ~ a.Image) }}" alt="{{ a.Image }}" style="width: 100%; max-height: 450px;"></a>
                                 </div>
                                 <div class="feature-content">
-                                    <h3>{{ a.Titre }}</h3>
+                                        <h3>{{ a.Titre }}</h3>
                                     <div class="feature-details">
                                         <span class="author"><strong>Auteur :</strong> {{ a.Auteur }}</span>
                                         {% if a.Categorie is not null %}
