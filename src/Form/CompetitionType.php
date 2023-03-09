@@ -14,12 +14,7 @@ class CompetitionType extends AbstractType
         $builder
             ->add('nbrTrophet')
             ->add('nbrParticipationInternational')
-<<<<<<< Updated upstream
-            ->add('ClassementMondial')
-            ->add('Niveau')
-=======
             
->>>>>>> Stashed changes
         ;
     }
 

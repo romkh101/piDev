@@ -1,11 +1,4 @@
 twig:
-<<<<<<< Updated upstream
-    default_path: '%kernel.project_dir%/templates'
-
-when@test:
-    twig:
-        strict_variables: true
-=======
     
     globals:
         dompdf:
@@ -13,4 +6,3 @@ when@test:
             binary: /usr/local/bin/dompdf # chemin de l'exécutable Dompdf
             options:
                 isRemoteEnabled: true # permet de charger des fichiers distants
->>>>>>> Stashed changes

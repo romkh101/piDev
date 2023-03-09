@@ -13,7 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
-
+use Dompdf\Options;
+use Endroid\QrCode\QrCode;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Knp\Component\Pager\PaginatorInterface;
 use PharIo\Manifest\Email;
@@ -22,6 +23,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Test\Constraint\EmailAttachmentCount;
 use \Swift_Mailer;
+use Endroid\QrCodeBundle\Response\QrCodeResponse;
+use Endroid\QrCode\QrCodeFactoryInterface;
 
 #[Route('/tournoi')]
 class TournoiController extends AbstractController
@@ -180,41 +183,75 @@ public function assignAthlete(Request $request, Tournoi $tournoi): Response
 #[Route('/{id}/pdf', name: 'app_tournoi_pdf', methods: ['GET','POST'])]
 public function pdf(Tournoi $tournoi): Response
 {
-    // create new PDF document
-    $dompdf = new Dompdf();
-    
-    // generate HTML content for the document
+    // Générer le contenu HTML pour le PDF
+    $pathlogo = $this->getParameter('kernel.project_dir') . '/public/assets/images/logo.png';
+    $imageData = base64_encode(file_get_contents($pathlogo));
+    $qrCodes = [];
+    foreach ($tournoi->getAthletes() as $athlete) {
+        // Generate the QR code image
+        $qrCode = new QrCode($athlete->getId());
+        $qrCode->setSize(200);
+        $qrCodes[] = $qrCode;
+    }
+  
+
+    // Rendre la vue pour le PDF
     $html = $this->renderView('tournoi/pdf.html.twig', [
         'tournoi' => $tournoi, 
-        
+        'image_data' => $imageData,
+        'qrCodes' => $qrCodes,
     ]);
-
-    // load HTML into the PDF document
+    
+    // Créer un nouveau document PDF
+    $dompdf = new Dompdf();
+    
+    // Charger le contenu HTML dans le document PDF
     $dompdf->loadHtml($html);
 
-    // set paper size and orientation
+    // Définir la taille de papier et l'orientation
     $dompdf->setPaper('A4', 'portrait');
-    
 
-    // render PDF document
+    // Appliquer les options pour l'affichage sur une seule page
+    $options = new Options();
+    $options->setIsPhpEnabled(true);
+    $options->setIsRemoteEnabled(true);
+    $options->setIsFontSubsettingEnabled(true);
+    $options->setIsHtml5ParserEnabled(true);
+    $options->setChroot($this->getParameter('kernel.project_dir'));
+    $options->setDebugCss(false);
+    $options->setDebugLayout(false);
+    $options->setDebugLayoutLines(false);
+    $options->setDebugLayoutBlocks(false);
+    $options->setIsFontSubsettingEnabled(true);
+    $options->setDefaultPaperSize('A4');
+    $options->setDefaultFont('Helvetica');
+    $options->setDpi(150);
+    $options->setIsJavascriptEnabled(false);
+    $options->setIsRemoteEnabled(false);
+    $dompdf->setOptions($options);
+
+
+    // Générer le document PDF
     $dompdf->render();
 
-    // create a response object to return the PDF file
-    $response = new Response($dompdf->output());
-    
-    // set content type to application/pdf
+    // Récupérer le contenu du document PDF généré
+    $output = $dompdf->output();
+
+    // Créer une réponse HTTP avec le contenu du document PDF
+    $response = new Response($output);
+
+    // Définir le type de contenu comme application/pdf
     $response->headers->set('Content-Type', 'application/pdf');
 
+    // Ajouter le nom du fichier PDF en tant que disposition
     $disposition = $response->headers->makeDisposition(
         ResponseHeaderBag::DISPOSITION_INLINE,
-        'tournoi.pdf'
+        'certificat.pdf'
     );
     $response->headers->set('Content-Disposition', $disposition);
 
     return $response;
 }
-
-
 
 
 }

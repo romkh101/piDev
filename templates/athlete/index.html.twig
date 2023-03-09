@@ -9,8 +9,31 @@
 <br>
 <br>
  <h1>Athlete index</h1>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+              <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+    
+<form class="d-flex align-items-center col-12 col-md-8 col-lg-3">
+               <span class="position-absolute pl-3 search-icon">
+                <i class="fe fe-search"></i>
+              </span>
+<input type="search" id="myInput" class="form-control pl-6" placeholder="Search " />
+          
+            </form>
+ {% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
 <br>
-    <table class="table">
+    <table class="table" id="myTable">
+
         <thead>
             <tr>
                 <th>Id</th>
@@ -20,19 +43,13 @@
                 <th>Poids</th>
                 <th>Taille</th>
                 <th>actions</th>
-<<<<<<< Updated upstream
-=======
              
                
->>>>>>> Stashed changes
             </tr>
         </thead>
         <tbody>
         {% for athlete in athletes %}
-<<<<<<< Updated upstream
-=======
         
->>>>>>> Stashed changes
             <tr>
                 <td>{{ athlete.id }}</td>
                 <td>{{ athlete.name }}</td>
@@ -40,12 +57,9 @@
                 <td>{{ athlete.Age }}</td>
                 <td>{{ athlete.poids }}</td>
                 <td>{{ athlete.taille }}</td>
-<<<<<<< Updated upstream
-=======
                  
            
         
->>>>>>> Stashed changes
                 <td>
                     <a href="{{ path('app_athlete_show', {'id': athlete.id}) }}">show</a>
                     <a href="{{ path('app_athlete_edit', {'id': athlete.id}) }}">edit</a>
@@ -53,10 +67,7 @@
                     <a href="{{ path('app_com', {'id': athlete.id}) }}">NewCompetition</a>
                     
                     
-<<<<<<< Updated upstream
-=======
                     
->>>>>>> Stashed changes
                 </td>
             </tr>
         {% else %}
@@ -64,10 +75,7 @@
                 <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
-<<<<<<< Updated upstream
-=======
         
->>>>>>> Stashed changes
         </tbody>
     </table>
 

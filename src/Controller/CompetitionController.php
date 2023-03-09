@@ -30,10 +30,7 @@ class CompetitionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-<<<<<<< Updated upstream
-=======
             
->>>>>>> Stashed changes
             $competitionRepository->save($competition, true);
 
             return $this->redirectToRoute('app_competition_index', [], Response::HTTP_SEE_OTHER);
@@ -87,19 +84,18 @@ class CompetitionController extends AbstractController
     {
         $competition = new Competition();
         $form = $this->createForm(CompetitionType::class, $competition);
-<<<<<<< Updated upstream
-
-=======
        
->>>>>>> Stashed changes
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $competition = $form->getData();
             $competition->setAthlete($athlete);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($competition);
-            $entityManager->flush();
+            $flushy = $this->get('flushy'); // ou injecter Flushy via l'autowiring
+            $this->addFlash('success', 'La compétition a été ajoutée avec succès!');
+
+      $flushy->persist($entityManager, $competition);
+   $flushy->flush($entityManager);
 
             return $this->redirectToRoute('app_competition_index', ['id' => $athlete->getId()]);
         }

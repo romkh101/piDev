@@ -24,14 +24,7 @@ class Competition
     #[Assert\Regex(pattern: '/^[0-9\s]+$/u', message: 'Le titre ne doit pas contenir des caractères spéciaux.')]
     #[ORM\Column]
     private ?int $nbrParticipationInternational = null;
-<<<<<<< Updated upstream
-    #[Assert\NotBlank(message:"classement requis")]
-    #[Assert\Regex(pattern: '/^[0-9\s]+$/u', message: 'Le titre ne doit pas contenir des caractères spéciaux.')]
-    #[ORM\Column]
-    private ?int $ClassementMondial = null;
-=======
     
->>>>>>> Stashed changes
     #[Assert\NotBlank(message:"niveau requis")]
     #[Assert\Regex(pattern: '/^[a-zA-Z0-9\s]+$/u', message: 'Le titre ne doit pas contenir des caractères spéciaux.')]
     #[ORM\Column(length: 255)]
@@ -39,14 +32,9 @@ class Competition
 
     #[ORM\OneToOne(inversedBy: 'competition', cascade: ['persist', 'remove'])]
     private ?Athlete $athlete = null;
-<<<<<<< Updated upstream
-
-    
-=======
    
     #[ORM\Column(nullable: true)]
 private ?int $ClaMondial = null; 
->>>>>>> Stashed changes
 
     public function getId(): ?int
     {
@@ -61,12 +49,6 @@ private ?int $ClaMondial = null;
     public function setNbrTrophet(int $nbrTrophet): self
     {
         $this->nbrTrophet = $nbrTrophet;
-<<<<<<< Updated upstream
-
-        return $this;
-    }
-
-=======
         $this->setClaMondial(10);
         return $this;
     }
@@ -87,7 +69,6 @@ private ?int $ClaMondial = null;
 
     return $this;
     }
->>>>>>> Stashed changes
     
     public function getNbrParticipationInternational(): ?int
     {
@@ -97,35 +78,6 @@ private ?int $ClaMondial = null;
     public function setNbrParticipationInternational(int $nbrParticipationInternational): self
     {
         $this->nbrParticipationInternational = $nbrParticipationInternational;
-<<<<<<< Updated upstream
-
-        return $this;
-    }
-
-    public function getClassementMondial(): ?int
-    {
-        return $this->ClassementMondial;
-    }
-
-    public function setClassementMondial(int $ClassementMondial): self
-    {
-        $this->ClassementMondial = $ClassementMondial;
-
-        return $this;
-    }
-
-    public function getNiveau(): ?string
-    {
-        return $this->Niveau;
-    }
-
-    public function setNiveau(string $Niveau): self
-    {
-        $this->Niveau = $Niveau;
-
-        return $this;
-    }
-=======
     $this->setClaMondial(10);
     return $this;
     }
@@ -146,7 +98,6 @@ public function setNiveau(string $Niveau): self
         return $this;
     }
 }
->>>>>>> Stashed changes
 
 
     public function getAthlete(): ?Athlete
@@ -161,10 +112,6 @@ public function setNiveau(string $Niveau): self
         return $this;
     }
 
-<<<<<<< Updated upstream
-  
-=======
     
 
->>>>>>> Stashed changes
 }

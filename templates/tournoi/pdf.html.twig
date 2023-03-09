@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ tournoi.titre }}</title>
+    <style>
+        .logo {
+            width: 100px;
+            height: 100px;
+            float: left;
+            margin-right: 20px;
+        }
+        .athlete {
+            page-break-after: always;
+        }
+    </style>
 </head>
 <body>
-    <h1>Certificat de participation</h1>
-    <p>Ce certificat atteste que {% for athlete in tournoi.athletes %}
-            
-                {{ athlete.name }}
-            
-            {% endfor %} a participé au tournoi {{ tournoi.titre }} organisé par notre association.</p>
-    <p>Date : {{ tournoi.date | date("d/m/Y") }}</p>
-    <p>Signature : ____________________________</p>
+   
+    {% for athlete in tournoi.athletes %}
+     <img src="data:image/png;base64,{{ image_data }}" alt="Logo" class="logo">
+    <h1 style="margin-bottom: 50px;">Certificat de participation</h1>
+
+        <div class="athlete">
+            <p>Ce certificat atteste que {{ athlete.name }} a participé au tournoi {{ tournoi.titre }} organisé par notre association.</p>
+            <p>Date : {{ tournoi.date | date("d/m/Y") }}</p>
+            <p>Signature : ____________________________</p>
+        </div>
+    {% endfor %}
 </body>
 </html>

@@ -39,15 +39,9 @@
         </tbody>
     </table>
 
-<<<<<<< Updated upstream
-    <a href="{{ path('app_athlete_index') }}">back to list</a>
-
-    <a href="{{ path('app_athlete_edit', {'id': athlete.id}) }}">edit</a>
-=======
     <a class="btn btn-primary" href="{{ path('app_athlete_index') }}">back to list</a>
 
     <a  class="btn btn-primary" href="{{ path('app_athlete_edit', {'id': athlete.id}) }}">edit</a>
->>>>>>> Stashed changes
 
     {{ include('athlete/_delete_form.html.twig') }}
 {% endblock %}

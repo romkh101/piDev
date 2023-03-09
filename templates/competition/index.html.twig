@@ -10,20 +10,26 @@
 <br>
     <h1>Competition index</h1>
 <br>
-
-<<<<<<< Updated upstream
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>NameAthlete</th>
-                <th>NbrTrophet</th>
-                <th>NbrParticipationInternational</th>
-                <th> ClassementMondial</th>
-                <th>Niveau</th>
-                <th>actions</th>
-=======
-    <table class="table table-bordered">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+              <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+    
+<form class="d-flex align-items-center col-12 col-md-8 col-lg-3">
+               <span class="position-absolute pl-3 search-icon">
+                <i class="fe fe-search"></i>
+              </span>
+<input type="search" id="myInput" class="form-control pl-6" placeholder="Search " />
+          
+            </form>
+    <table class="table table-bordered" id="myTable">
         <thead>
             <tr>
                 <th class="font-weight-bold">Id</th>
@@ -33,20 +39,12 @@
                 <th class="font-weight-bold">ClassementMondial</th>
                 <th class="font-weight-bold">Niveau</th>
                 <th class="font-weight-bold">actions</th>
->>>>>>> Stashed changes
                 
             </tr>
         </thead>
         <tbody>
         {% for competition in competitions %}
             <tr>
-<<<<<<< Updated upstream
-                <td>{{ competition.id }}</td>
-                <td>{{ competition.athlete.name}}</td>
-                <td>{{ competition.nbrTrophet }}</td>
-                <td>{{ competition.nbrParticipationInternational }}</td>
-                <td>{{ competition.ClassementMondial }}</td>
-=======
                 <td class="font-weight-bold">{{ competition.id }}</td>
                <td>
     {% if competition.athlete %}
@@ -56,7 +54,6 @@
                 <td>{{ competition.nbrTrophet }}</td>
                 <td>{{ competition.nbrParticipationInternational }}</td>
                 <td>{{ competition.ClaMondial }}</td>
->>>>>>> Stashed changes
                 <td>{{ competition.Niveau }}</td>
                  
                 <td>
@@ -66,11 +63,7 @@
             </tr>
         {% else %}
             <tr>
-<<<<<<< Updated upstream
-                <td colspan="6">no records found</td>
-=======
                 <td colspan="6" class="font-weight-bold">no records found</td>
->>>>>>> Stashed changes
             </tr>
         {% endfor %}
         </tbody>

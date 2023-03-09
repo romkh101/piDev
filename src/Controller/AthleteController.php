@@ -4,17 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Athlete;
 use App\Entity\Competition;
-<<<<<<< Updated upstream
-use App\Form\AthleteType;
-use App\Form\CompetitionType;
-use App\Repository\AthleteRepository;
-=======
 use App\Entity\Tournoi;
 use App\Form\AthleteType;
 use App\Form\CompetitionType;
 use App\Repository\AthleteRepository;
 use Doctrine\ORM\EntityManagerInterface;
->>>>>>> Stashed changes
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,38 +20,13 @@ class AthleteController extends AbstractController
     #[Route('/', name: 'app_athlete_index', methods: ['GET'])]
     public function index(AthleteRepository $athleteRepository): Response
     {
-<<<<<<< Updated upstream
-        return $this->render('athlete/index.html.twig', [
-            'athletes' => $athleteRepository->findAll(),
-=======
         
         return $this->render('athlete/index.html.twig', [
             'athletes' => $athleteRepository->findAll()
->>>>>>> Stashed changes
         ]);
     }
 
     #[Route('/new', name: 'app_athlete_new', methods: ['GET', 'POST'])]
-<<<<<<< Updated upstream
-    public function new(Request $request, AthleteRepository $athleteRepository): Response
-    {
-        $athlete = new Athlete();
-        $form = $this->createForm(AthleteType::class, $athlete);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $athleteRepository->save($athlete, true);
-
-            return $this->redirectToRoute('app_athlete_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('athlete/new.html.twig', [
-            'athlete' => $athlete,
-            'form' => $form,
-        ]);
-    }
-
-=======
 public function new(Request $request, AthleteRepository $athleteRepository): Response
 {
     $athlete = new Athlete();
@@ -96,7 +65,6 @@ public function error(): Response
     return $this->render('athlete/error.html.twig');
 }
 
->>>>>>> Stashed changes
     #[Route('/{id}', name: 'app_athlete_show', methods: ['GET'])]
     public function show(Athlete $athlete): Response
     {
@@ -136,10 +104,7 @@ public function error(): Response
 
     public function neeew(Athlete $athlete, Request $request)
     {
-<<<<<<< Updated upstream
-=======
         
->>>>>>> Stashed changes
         $competition = new Competition();
         $form = $this->createForm(CompetitionType::class, $competition);
 
@@ -152,16 +117,6 @@ public function error(): Response
             $entityManager->persist($competition);
             $entityManager->flush();
 
-<<<<<<< Updated upstream
-            return $this->redirectToRoute('app_competition_index', ['id' => $athlete->getId()]);
-        }
-
-        return $this->render('competition/neew.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-    
-=======
             return $this->redirectToRoute('app_competition_index', ['id' => $athlete->getId()],);
         }
 
@@ -184,6 +139,5 @@ public function error(): Response
     
     
 }
->>>>>>> Stashed changes
 
 }
