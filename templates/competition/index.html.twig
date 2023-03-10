@@ -1,0 +1,73 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Competition index{% endblock %}
+
+{% block code %}
+<br>
+<br>
+<br>
+<br>
+<br>
+    <h1>Competition index</h1>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+              <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+    
+<form class="d-flex align-items-center col-12 col-md-8 col-lg-3">
+               <span class="position-absolute pl-3 search-icon">
+                <i class="fe fe-search"></i>
+              </span>
+<input type="search" id="myInput" class="form-control pl-6" placeholder="Search " />
+          
+            </form>
+    <table class="table table-bordered" id="myTable">
+        <thead>
+            <tr>
+                <th class="font-weight-bold">Id</th>
+                <th class="font-weight-bold">NameAthlete</th>
+                <th class="font-weight-bold">NbrTrophet</th>
+                <th class="font-weight-bold">NbrParticipationInternational</th>
+                <th class="font-weight-bold">ClassementMondial</th>
+                <th class="font-weight-bold">Niveau</th>
+                <th class="font-weight-bold">actions</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for competition in competitions %}
+            <tr>
+                <td class="font-weight-bold">{{ competition.id }}</td>
+               <td>
+    {% if competition.athlete %}
+        {{ competition.athlete.name }}
+    {% endif %}
+</td>
+                <td>{{ competition.nbrTrophet }}</td>
+                <td>{{ competition.nbrParticipationInternational }}</td>
+                <td>{{ competition.ClaMondial }}</td>
+                <td>{{ competition.Niveau }}</td>
+                 
+                <td>
+                    <a href="{{ path('app_competition_show', {'id': competition.id}) }}">show</a>
+                    <a href="{{ path('app_competition_edit', {'id': competition.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="font-weight-bold">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_competition_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.email }}</title>
+    <style>
+        .logo {
+            width: 250px;
+            height: 200px;
+            float: left;
+            margin-right: 20px;
+        }
+        .athlete {
+            page-break-after: always;
+        }
+       
+    </style>
+</head>
+<body>
+<img src="data:image/png;base64,{{ image_data }}" alt="Logo" class="logo" >
+    <h1>User</h1>
+ <p>voici les coordonnes de cet utilisateur
+            <table border='4' >
+            <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>email</th>
+            
+            </tr>
+            <tr>
+    <td>       {{ user.nom }}</td>
+         <td>   {{ user.prenom }}</td>
+           <td>  {{ user.email }}</td>
+</tr>
+
+            
+             
+</body>
+</html>

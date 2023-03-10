@@ -1,0 +1,31 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}New Athlete{% endblock %}
+
+{% block code %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<h1>Create new Athlete</h1>
+
+
+
+
+
+
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+    {{ include('athlete/_form.html.twig') }}
+
+    <a href="{{ path('app_athlete_index') }}">back to list</a>
+  {% for type, messages in app.flashes() %}
+    {% for message in messages %}
+        <div class="alert {% if type == 'danger' %}alert-danger{% endif %}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+
+{% endblock %}

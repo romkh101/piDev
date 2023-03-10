@@ -1,0 +1,26 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Assign Athlete{% endblock %}
+
+{% block code %}
+<br>
+<br>
+
+
+<br>
+
+  <h1>Assign Athlete to {{ tournoi.titre }}</h1>
+<br>
+<br>
+<br>
+
+
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <button type="submit" class="btn btn-primary">Assign</button>
+  {{ form_end(form) }}
+
+  <hr>  
+
+  <a href="{{ path('app_tournoi_show', { 'id': tournoi.id }) }}">Back to Tournoi</a>
+{% endblock %}

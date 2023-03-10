@@ -1,0 +1,83 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Athlete index{% endblock %}
+
+{% block code %}
+<br>
+<br>
+<br>
+<br>
+<br>
+ <h1>Athlete index</h1>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+              <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+    
+<form class="d-flex align-items-center col-12 col-md-8 col-lg-3">
+               <span class="position-absolute pl-3 search-icon">
+                <i class="fe fe-search"></i>
+              </span>
+<input type="search" id="myInput" class="form-control pl-6" placeholder="Search " />
+          
+            </form>
+ {% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+<br>
+    <table class="table" id="myTable">
+
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Prenom</th>
+                <th>Age</th>
+                <th>Poids</th>
+                <th>Taille</th>
+                <th>actions</th>
+             
+               
+            </tr>
+        </thead>
+        <tbody>
+        {% for athlete in athletes %}
+        
+            <tr>
+                <td>{{ athlete.id }}</td>
+                <td>{{ athlete.name }}</td>
+                <td>{{ athlete.prenom }}</td>
+                <td>{{ athlete.Age }}</td>
+                <td>{{ athlete.poids }}</td>
+                <td>{{ athlete.taille }}</td>
+                 
+           
+        
+                <td>
+                    <a href="{{ path('app_athlete_show', {'id': athlete.id}) }}">show</a>
+                    <a href="{{ path('app_athlete_edit', {'id': athlete.id}) }}">edit</a>
+                   
+                    <a href="{{ path('app_com', {'id': athlete.id}) }}">NewCompetition</a>
+                    
+                    
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_athlete_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Tournoi index{% endblock %}
+
+{% block code %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>Tournoi index</h1>
+    <br>
+    <br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+              <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+    
+<form class="d-flex align-items-center col-12 col-md-8 col-lg-3">
+               <span class="position-absolute pl-3 search-icon">
+                <i class="fe fe-search"></i>
+              </span>
+<input type="search" id="myInput" class="form-control pl-6" placeholder="Search " />
+          
+            </form>
+    <br>
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+    <table class="table table-bordered" id="myTable">
+        <thead>
+            <tr>
+                <th class="font-weight-bold">Id</th>
+                <th class="font-weight-bold">Titre</th>
+                <th class="font-weight-bold">Date</th>
+                <th class="font-weight-bold">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tournoi in tournoi %}
+                <tr>
+                    <td>{{ tournoi.id }}</td>
+                    <td>{{ tournoi.titre }}</td>
+                    <td>{{ tournoi.date ? tournoi.date|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_tournoi_show', {'id': tournoi.id}) }}">show</a>
+                        <a href="{{ path('app_tournoi_edit', {'id': tournoi.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if tournoi|length > 0 %}
+        <ul class="pagination justify-content-center">
+            {% for page in tournoi.page %}
+                <li {% if page.isCurrentPage %}class="active"{% endif %}>
+                    <a href="{{ path('app_tournoi_index', {'page': page.number, 'q': q}) }}">{{ page.number }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+   
+        {{ knp_pagination_render(tournoi) }}
+    {% endif %}
+
+    <a class="btn btn-primary" href="{{ path('app_tournoi_new') }}">Create new</a>
+{% endblock %}

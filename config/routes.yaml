@@ -1,0 +1,13 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+
+unverified:
+    path: /unverified
+    controller: App\Controller\UnverifiedController::index
+    # config/routes.yaml
+not_found:
+    path: /404
+    controller: App\Controller\ErrorController::showNotFound
+
