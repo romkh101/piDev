@@ -46,7 +46,6 @@ public class ActualiteController implements Initializable {
     private TextField auteurA;
     @FXML
     private TextField contenuA;
-    private TextField imageA;
     @FXML
     private DatePicker dateA;
     @FXML
@@ -145,11 +144,11 @@ if (selectedFile != null) {
     return;
 }
 
-if (contenu.isEmpty() || contenu.length() < 10) {
+if (contenu.isEmpty() || contenu.length() < 10 || contenu.length() > 500) {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle("Erreur");
     alert.setHeaderText(null);
-    alert.setContentText("Veuillez saisir un contenu d'actualité valide (minimum 10 caractères).");
+    alert.setContentText("Veuillez saisir un contenu d'actualité valide (entre 10 et 500 caractéres).");
     alert.showAndWait();
     return;
 }
@@ -205,7 +204,7 @@ alert.showAndWait();
 titreA.clear();
 contenuA.clear();
 auteurA.clear();
-imageA.clear();
+imgview.setImage(null);
 dateA.setValue(null);
 categorieA.setValue(null);
 }

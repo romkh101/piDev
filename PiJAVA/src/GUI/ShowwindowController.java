@@ -6,7 +6,9 @@
 package GUI;
 
 import Entities.Actualite;
+import Entities.Categorie;
 import Services.ActualiteCRUD;
+import Services.CategorieCRUD;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +43,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javax.imageio.ImageIO;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -144,9 +147,10 @@ public class ShowwindowController implements Initializable {
         tvA.refresh();
     }
 
-
+    private CategorieCRUD categorieCRUD;
     private ActualiteCRUD actualiteCRUD;
     private ObservableList<Actualite> actualites;
+    private ObservableList<Categorie> categories = null;
 
     /**
      * Initializes the controller class.
@@ -240,14 +244,75 @@ colimage.setCellFactory(column -> new TableCell<Actualite, String>() {
 }
     }
 
+
+
     @FXML
+private void handleajoutcat(ActionEvent event) {
+    try {
+        Parent root = FXMLLoader.load(getClass().getResource("addcategorie.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage(); // create a new stage
+        stage.setScene(scene); // set the scene to the stage
+        stage.show(); // show the stage
+    } catch (IOException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+    @FXML
+    private void handlegerercat(ActionEvent event) throws ParseException {
+         try {
+        Parent root = FXMLLoader.load(getClass().getResource("showcategorie.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage(); // create a new stage
+        stage.setScene(scene); // set the scene to the stage
+        stage.show(); // show the stage
+       
+    } catch (IOException ex) {
+        System.out.println(ex.getMessage());
+    }
+    }
+
+    @FXML
+    private void handleajoutact(ActionEvent event) throws ParseException {
+         try {
+        Parent root = FXMLLoader.load(getClass().getResource("addactualite.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage(); // create a new stage
+        stage.setScene(scene); // set the scene to the stage
+        stage.initModality(Modality.APPLICATION_MODAL); // set the modality to APPLICATION_MODAL to block the main stage
+        stage.showAndWait(); // show the stage and wait for it to be closed
+        actualites = actualiteCRUD.listerActualite();
+        tvA.setItems(actualites);
+        tvA.refresh();
+    } catch (IOException ex) {
+        System.out.println(ex.getMessage());
+    }
+    }
+
+    @FXML
+    private void handlegenreract(ActionEvent event) throws ParseException {
+         try {
+        Parent root = FXMLLoader.load(getClass().getResource("showwindow.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage(); // create a new stage
+        stage.setScene(scene); // set the scene to the stage
+        stage.show(); // show the stage
+         actualites = actualiteCRUD.listerActualite();
+        tvA.setItems(actualites);
+        tvA.refresh();
+    } catch (IOException ex) {
+        System.out.println(ex.getMessage());
+    }
+    }
+        @FXML
 private void handlePDF(ActionEvent event) throws IOException {
     Actualite selectedActualite = tvA.getSelectionModel().getSelectedItem();
     if (selectedActualite == null) {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle("Error");
     alert.setHeaderText(null);
-    alert.setContentText("Please select an actuality to generate the PDF.");
+    alert.setContentText("Veuillez sélectionner une actualité.");
     alert.showAndWait();
     return;
 }
@@ -285,49 +350,85 @@ try {
     PDImageXObject logoImage = LosslessFactory.createFromImage(document, bufferedLogo);
 
     // draw the image onto the page
-    contentStream.drawImage(pdImage, 50, 600, 500, 300);
-    contentStream.drawImage(logoImage, 250, 50, 100, 50);
+    contentStream.drawImage(pdImage, 50, 500, 500, 300);
+    contentStream.drawImage(logoImage, 250, 30, 100, 50);
 
     // set the font and font size for the title
     contentStream.setFont(PDType1Font.HELVETICA_BOLD, 22);
 
     // write the title of the actualite to the page
     contentStream.beginText();
-    contentStream.newLineAtOffset(50, 550);
+    contentStream.newLineAtOffset(50, 480);
     contentStream.showText(selectedActualite.getTitre());
     contentStream.endText();
 
-    // set the font and font size for the content
-    contentStream.setFont(PDType1Font.HELVETICA, 14);
-
+    
+   
+        // set the font and font size for the content
+   contentStream.setFont(PDType1Font.HELVETICA, 14);
     // write the content of the actualite to the page
-    contentStream.beginText();
-    contentStream.newLineAtOffset(50, 520);
-    contentStream.showText(selectedActualite.getContenu());
-    contentStream.endText();
-    // set the font and font size for the author and date
+contentStream.beginText();
+contentStream.newLineAtOffset(50, 440);
+
+String contenu = selectedActualite.getContenu();
+int longueurLigne = 75;
+for (int i = 0; i < contenu.length(); i += longueurLigne) {
+    int finLigne = Math.min(i + longueurLigne, contenu.length());
+    String ligne = contenu.substring(i, finLigne);
+    contentStream.showText(ligne);
+    contentStream.newLineAtOffset(0, -20);
+}
+
+contentStream.endText();
+//categorie
+// set the font and font size for the category
+contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+
+// set the fill color to orange for the category rectangle
+contentStream.setNonStrokingColor(255, 165, 0);
+
+// draw a rectangle behind the category text
+contentStream.addRect(50, 455, 70, 20);
+contentStream.fill();
+
+// write the category of the actualite to the page
+contentStream.setNonStrokingColor(0, 0, 0);
+contentStream.beginText();
+contentStream.newLineAtOffset(55, 460);
+contentStream.showText(selectedActualite.getCategorie().getNom());
+contentStream.endText();
+
+// set the font and font size for the author
+contentStream.setFont(PDType1Font.HELVETICA, 12);
+
+// set the fill color to blue for the author text
+contentStream.setNonStrokingColor(0, 0, 255);
+
+// write the author of the actualite to the page
+contentStream.beginText();
+contentStream.newLineAtOffset(130, 460);
+contentStream.showText(selectedActualite.getAuteur());
+contentStream.endText();
+
+// set the font and font size for the date
+contentStream.setFont(PDType1Font.HELVETICA, 12);
+
+// set the fill color to gray for the date text
+contentStream.setNonStrokingColor(128, 128, 128);
+
+// write the date of the actualite to the page
+contentStream.beginText();
+contentStream.newLineAtOffset(200, 460);
+contentStream.showText("le " + selectedActualite.getDate().toString());
+contentStream.endText();
     
-    contentStream.setFont(PDType1Font.HELVETICA, 12);
 
-    
-    contentStream.beginText();
-    contentStream.newLineAtOffset(50, 500);
-    contentStream.showText(selectedActualite.getCategorie().getNom());
-    contentStream.endText();
-    // write the author of the actualite to the page
-    contentStream.beginText();
-    contentStream.newLineAtOffset(50, 480);
-    contentStream.showText("Author: " + selectedActualite.getAuteur());
-    contentStream.endText();
 
-    // write the date of the actualite to the page
-    contentStream.beginText();
-    contentStream.newLineAtOffset(50, 450);
-    contentStream.showText("Date: " + selectedActualite.getDate().toString());
-    contentStream.endText();
+
+    // footer
 
     contentStream.beginText();
-    contentStream.newLineAtOffset(200, 30);
+    contentStream.newLineAtOffset(150, 10);
     contentStream.showText("Copyright © 2023-abc sports, Inc. All rights reserved.");
     contentStream.endText();
 
@@ -340,57 +441,5 @@ try {
         e.printStackTrace();
     }
 }
-
-    @FXML
-private void handleajoutcat(ActionEvent event) {
-    try {
-        Parent root = FXMLLoader.load(getClass().getResource("addcategorie.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage(); // create a new stage
-        stage.setScene(scene); // set the scene to the stage
-        stage.show(); // show the stage
-    } catch (IOException ex) {
-        System.out.println(ex.getMessage());
-    }
-}
-
-    @FXML
-    private void handlegerercat(ActionEvent event) {
-         try {
-        Parent root = FXMLLoader.load(getClass().getResource("showcategorie.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage(); // create a new stage
-        stage.setScene(scene); // set the scene to the stage
-        stage.show(); // show the stage
-    } catch (IOException ex) {
-        System.out.println(ex.getMessage());
-    }
-    }
-
-    @FXML
-    private void handleajoutact(ActionEvent event) {
-         try {
-        Parent root = FXMLLoader.load(getClass().getResource("addactualite.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage(); // create a new stage
-        stage.setScene(scene); // set the scene to the stage
-        stage.show(); // show the stage
-    } catch (IOException ex) {
-        System.out.println(ex.getMessage());
-    }
-    }
-
-    @FXML
-    private void handlegenreract(ActionEvent event) {
-         try {
-        Parent root = FXMLLoader.load(getClass().getResource("showwindow.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage(); // create a new stage
-        stage.setScene(scene); // set the scene to the stage
-        stage.show(); // show the stage
-    } catch (IOException ex) {
-        System.out.println(ex.getMessage());
-    }
-    }
 }
     

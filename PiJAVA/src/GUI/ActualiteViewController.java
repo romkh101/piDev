@@ -37,22 +37,51 @@ public class ActualiteViewController implements Initializable {
     /**
      * Initializes the controller class.
      */
-     public void setActualite(Actualite actualite) {
-        webEngine = webView.getEngine();
+public void setActualite(Actualite actualite) {
+    webEngine = webView.getEngine();
 
-      String imagePath = "src/images/" + actualite.getImage();
-File file = new File(imagePath);
-String imageUri = file.toURI().toString();
+    String imagePath = "src/images/" + actualite.getImage();
+    File file = new File(imagePath);
+    String imageUri = file.toURI().toString();
 
-String htmlContent = "<h1>" + actualite.getTitre() + "</h1>"
-                   + "<li>" + actualite.getContenu() + "</li>"
-                   + "Categorie: " + actualite.getCategorie().getNom() 
-                   + "<li>" + "Auteur: " + actualite.getAuteur() + "</li>"
-                   + actualite.getDate()
-                   + "<br><img src=\"" + imageUri + "\">";
+    String htmlContent = "<div style='text-align:center;'>" +
+            "<img src=\"" + imageUri + "\" style='max-width:100%;'>" +
+            "<h1 style='text-align:center;'>" + actualite.getTitre() + "</h1>" +
+            "<p style='text-align:center;'>" +
+                "<div style='text-align:center; background-color:orange;'>" +
+                "<span style='color:white; padding:5px;'>"+ actualite.getCategorie().getNom() +"</span>" +
+            "</div>" +
+                "<span style='color:blue;'>"+ actualite.getAuteur() +"</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                "<span style='color:gray;'>"+ actualite.getDate() +"</span>" +
+            "</p>" +
+            "<hr>" +
+            "<p>" + wrapText(actualite.getContenu(), 75) + "</p>" +
+            "<div style='text-align:center;'>" +
+                "<img src='file:/C:/Users/Aziz/Documents/GitHub/piDev/PiJAVA/src/images/abcspor.png' style='width:80px;height:50px;'/>"  +
+                "<br>" +
+                "<span style='font-size:small; color:gray;'>Copyright © 2023-abc sports, Inc. All rights reserved.</span>" +
+            "</div>" +
+            "</div>";
 
-webEngine.loadContent(htmlContent);
-     }
+    webEngine.loadContent(htmlContent);
+}
+private String wrapText(String text, int maxCharactersPerLine) {
+    String[] words = text.split(" ");
+    StringBuilder sb = new StringBuilder();
+    int lineLength = 0;
+    for (String word : words) {
+        if (lineLength + word.length() > maxCharactersPerLine) {
+            sb.append("\n");
+            lineLength = 0;
+        }
+        sb.append(word + " ");
+        lineLength += word.length() + 1;
+    }
+    return sb.toString();
+}
+
+
+
      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
